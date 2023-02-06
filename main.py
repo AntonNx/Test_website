@@ -7,6 +7,7 @@ import psycopg2
 # render_template()шаблонизатор т.е. в параметр этой функции передаём наименования html файлов, а саму функцию передаём в декоратор app.route()
 # все htm файлы ПРИНЯТО хранить в подкаталоге templates
 app = Flask(__name__)
+#
 
 # Устанавливаем соединение с postgres
 connection = psycopg2.connect(user="postgres", password="123")
