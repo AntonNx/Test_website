@@ -1,0 +1,117 @@
+{% extends 'base.html' %}<!--Пример наследуемого файла, т.е. мы скопировали всю структуру из базового шаблона base-->
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block body %}
+
+<!-- меню раздела -->
+<div class="med-services-info-container js-med-container">
+    <!-- компонент меню -->
+    <div style="color:#000000">
+        <b> У нас вы можете записаться на приём к доктору Займаку </b>
+    </div>
+
+
+    <!-- основная информация -->
+    <div class="med-services-block js-med-block doctor-detail _active" data-block="about_doctor">
+        <div class="doctor-detail-row">
+            <div class="doctor-detail-col doctor-detail-photo-col">
+                <div class="doctor-detail-photo-col_wrap">
+                    <div class="doctor-detail__img">
+
+                        <div class="doctor-detail__img-block">
+                            <div style="color:#000000">Займак Антон Владимирович</div>
+                        </div>
+                    </div>
+                    <!-- картинки и текст - контент, нужно будет заменить-->
+                    <div class="doctor-detail__data">
+                        <div class="doctor-detail__status">
+                            <div class="doctor-detail__position">
+                                <p style="color:#000000">Председатель Ученого Совета ГК МЕДСИ, руководитель Центра<br>
+                                    диагностики и
+                                    инновационных медицинских технологий КДЦ МЕДСИ на Белорусской</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="doctor-detail__dataitem doctor-detail__dataitem-levels">
+                        <div style="color:#000000" class="doctor-detail__rank">
+                            Доктор медицинских наук
+                        </div>
+                    </div>
+                    <div class="sign-up-doctor sign-up-doctor_teblet __empty">
+                    </div>
+
+                </div>
+            </div>
+            <div class="doctor-detail-col doctor-detail-data-col">
+                <div class="doctor-detail-col_splitted">
+                    <h2 style="color:#000000" class="tablet-hidden">Информация о специалисте</h2>
+
+                    <!-- @todo проверить нужен ли здесь код для блока с сертификатами он уже есть в дополнительной информации -->
+                    <div style="color:#000000" class="doctor-detail-col_splitted-item med-service-block__about-content">
+                        <span style="color:#000000" class="__bold">Стаж работы:</span>
+                        38 лет.
+                    </div>
+                    <div style="color:#000000" class="doctor-detail-col_splitted-item med-service-block__about-content">
+                        <span class="__bold">Клиника:</span>
+                        <span><a style="color:#000000"
+                                 href=/clinics/belorusskaya/>Клинико-диагностический центр МЕДСИ на Белорусской</a>.</span>
+                    </div>
+                    <div class="doctor-detail-col_splitted-item med-service-block__about-content">
+                        <span style="color:#000000" class="__bold">Ученая степень / Категория / Ученое звание:</span>
+                        доктор медицинских наук / профессор /<br> врач высшей квалификационной категории.
+                    </div>
+                </div>
+            </div>
+            <div class="sign-up-doctor_main_wrapper sign-up-doctor_wrapper_js">
+                <div class="sign-up-doctor sign-up-doctor_main __empty">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- дополнительная информация -->
+    <div class="med-services-block js-med-block doctor-additional-info_content" data-block="additional_info">
+        <div class="doctor-additional-info_wrapper">
+            <div class="container">
+                <div class="inner_main">
+                    <div class="content">
+                        <div class="doctor-detail fake-pad">
+                            <h2 style="margin-bottom: 12px; color:#000000" id="additionalInfo;">Дополнительная
+                                информация</h2>
+
+                            <!-- @todo убрать пункт с сертификататми, котрый не в слайдере. -->
+                            <div style="color:#000000">
+                                <span class="__bold">Профессиональные достижения и опыт:</span>
+                                <ul style="color:#000000"> <b>
+                                    <li>Кандидатская диссертация «Применение изолированной <br>ультрафильтрации
+                                        у больных с почечной недостаточностью и сердечной<br> недостаточностью у
+                                        больных с ИБС»
+                                    </li>
+                                    <li>Докторская диссертация «Разработка и применение методов<br>
+                                        иммуносорбции в лечении тяжелых форм атеросклероза»
+                                    </li>
+                                    <li>Член правления Московского общества гемафереза</li>
+                                    <li>Член National Lipid Association USA</li>
+                                    <li>Член Международного общества искусственных органов</li>
+                                    <li>Член Национального общества атеросклероза России</li>
+                                    <li>Лауреат государственных премий Правительства РФ</li>
+                                </ul>
+                            </div>
+                            <!-- @todo убрать пункт с сертификататми, котрый не в слайдере. -->
+                            <div style="color:#000000"
+                                 class="detail_info_splitted-item med-service-block__about-content">
+                                <span class="__bold">Образование:</span>
+                                Туркменский государственный медицинский
+                                <nobr>институт, 1975 г.</nobr>
+                            </div>
+                            <!-- @todo убрать пункт с сертификататми, котрый не в слайдере. -->
+                            <div class="detail_info_splitted-item med-service-block__about-content">
+                                <span class="__bold">Ординатура:</span>
+                                по анестезиологии и реаниматологии.
+                            </div>
+                            {% endblock %}

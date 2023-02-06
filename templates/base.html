@@ -1,0 +1,41 @@
+<!--Это будет базовый шаблон на основе которогу буду создавать остальные HTML-файлы-->
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" type="image/png" href="img/111.png">
+    <link rel="stylesheet" type="text/css" media="all"
+          href="https://starper55plys.ru/wp-content/themes/twentyten-child/style.css"/>
+     <link rel="shortcut icon" href="css/img/111.png" type="image/png">
+    <!--    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">&lt;!&ndash;Тут мы задаём стиль из файла&ndash;&gt;-->
+    <!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">&lt;!&ndash;-->
+    <!--    пример наследования стиля цсс с стороннего сайта&ndash;&gt;-->
+    <style >
+    body {
+      background-image: url('static/fon.png');
+      background-size: cover;
+    }
+
+    </style>
+</head>
+<header>
+    <nav>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/video">Vidosiki</a></li>
+        </ul>
+    </nav>
+</header>
+<title>{% block title %}{% endblock %}</title><!----Теперь, при наследовании этого шаблона  вся конструкция будет
+    браться отсюда из base, а title будет такой, какой я укажу с помощью другой конструкции в наследуемом файле html-->
+
+<body>
+{% block body %}
+<p style="color:#ffff00"></p>
+{% endblock %}<!--тут по аналогии с title-->
+</body>
+</html>
