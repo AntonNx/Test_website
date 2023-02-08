@@ -1,10 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}<!--Пример наследуемого файла, т.е. мы скопировали всю структуру из базового шаблона base-->
+
+{% block title %}
+Слитая бд клиентов
+{% endblock %}
+
+{% block body %}
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
 </head>
-<body>
-$END$
+<body background="img/111.jpg">
+<div class="container mt-5">
+    <h1>Бд в открытом доступе</h1>
+    {% if articles|length>0 %}
+        {% for el in articles %}
+        <div class="alert-info">
+            <h2 style="color:#FFFF00;">{{ el.name }}
+                <p>{{ el.comment }}</p>
+                <p><b> Дата: {{ el.date.date() }}</b></p>
+            </h2>
+            <a href='/posts/{{ el.id }}' class='btn btn-warning'> Детальнее</a>
+        </div>
+        {% endfor %}
+    {% else %}
+    <p>У нас ещё нет клиентов</p>
+    {% endif %}
+
+
+</div>
 </body>
 </html>
+{% endblock %}

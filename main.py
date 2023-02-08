@@ -26,7 +26,7 @@ class Article(db.Model):
 # Создаём бд через терминал https://www.youtube.com/watch?v=G-si1WbtNeM&list=PL0lO_mIqDDFXiIQYjLbncE9Lb6sx8elKA&index=18
 
 # теперь функционал для создания записей
-@app.route('/create-article', methods=['POST','GET'])  # указали что функциия может обрабатывать данные
+@app.route('/create-article', methods=['POST', 'GET'])  # указали что функциия может обрабатывать данные
 # с помощью функции POST. т.е. функция сможет обрабатывать данные из формы и прямой захд на страничку
 def create_article():
     if request.method == 'POST':
@@ -37,11 +37,53 @@ def create_article():
         try:
             db.session.add(article)
             db.session.commit()
-            return redirect('/')
+            return redirect('/posts')
         except:
             return 'При добавлении статьи произошла ошибка'
     else:
         return render_template('create-article.html')
+
+
+@app.route('/posts/<int:id>/update', methods=['POST', 'GET'])
+def update_article(id):
+    article = Article.query.get(id)
+    if request.method == 'POST':
+        article.name = request.form['name']
+        article.comment = request.form['comment']
+        try:
+            db.session.commit()
+            return redirect('/posts')
+        except:
+            return 'При редактировании записи произошла ошибка'
+    else:
+
+        return render_template('post_update.html', article=article)
+
+
+@app.route('/posts')  # обработчик для вывода записей
+def posts():
+    articles = Article.query.order_by(Article.date.desc()).all()
+    return render_template('posts.html', articles=articles)  # то что красненьким это
+    # наименование к которому мы сможем обращаться в шаблоне
+
+
+@app.route('/posts/<int:id>')
+def post_detail(id):
+    article = Article.query.get(id)
+    return render_template('post_detail.html', article=article)
+
+
+@app.route('/posts/<int:id>/del')
+def post_delete(id):
+    article = Article.query.get_or_404(
+        id)  # функция для получения записи get_or_404 если не находит запись то выводит ошибку 404
+
+    try:
+        db.session.delete(article)  # Удаляем запись
+        db.session.commit()  # Коммитим
+        return redirect('/posts')
+    except:
+        return 'При удалении записи произошла ошибка'
 
 
 # конструкция называется обработчик
