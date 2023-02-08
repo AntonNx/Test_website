@@ -1,47 +1,48 @@
-from flask import Flask, render_template, url_for, request
+from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 # render_template()шаблонизатор т.е. в параметр этой функции передаём наименования html файлов, а саму функцию передаём в декоратор app.route()
 # все htm файлы ПРИНЯТО хранить в подкаталоге templates
 
-SQLAlchemy.SQLALCHEMY_TRACK_MODIFICATIONS=False
+SQLAlchemy.SQLALCHEMY_TRACK_MODIFICATIONS = False
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///clients.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # отключаем какуюто назойливую модификацию
 db = SQLAlchemy(app)
 
 
-class Client(db.Model):
+# создаём класс для добавления записей в таблицу
+class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
     comment = db.Column(db.String(300), nullable=False)
-    date = db.Column(db.DateTime, nullable=False)
+    date = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
-        return f'<Client {self.id} {self.name} {self.date} {self.comment}>'
+        return '<Article %r>' % self.id
 
 
-db.create_all()
+# Создаём бд через терминал https://www.youtube.com/watch?v=G-si1WbtNeM&list=PL0lO_mIqDDFXiIQYjLbncE9Lb6sx8elKA&index=18
 
-clients1 = Client.query.all()
+# теперь функционал для создания записей
+@app.route('/create-article', methods=['POST','GET'])  # указали что функциия может обрабатывать данные
+# с помощью функции POST. т.е. функция сможет обрабатывать данные из формы и прямой захд на страничку
+def create_article():
+    if request.method == 'POST':
+        first = request.form['name']
+        second = request.form['comment']
 
+        article = Article(name=first, comment=second)
+        try:
+            db.session.add(article)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return 'При добавлении статьи произошла ошибка'
+    else:
+        return render_template('create-article.html')
 
-
-
-@app.route('/clients', methods=['POST'])
-def create_client():
-    name = request.form['name']
-    date = request.form['date']
-    comment = request.form['comment']
-    client = Client(name=name, date=date, comment=comment)
-    db.session.add(client)
-    db.session.commit()
-    return f'Client {client.name} with id {client.id}  created'
-
-for client in clients1:
-    print("Name: ", client.name)
-    print("Date: ", client.date)
-    print("Comment: ", client.comment)
-# db.drop_all()
 
 # конструкция называется обработчик
 @app.route('/')  # '/' означает гланую страницу, т.е. перейдя на главную страницу верни то что написано в return
@@ -54,7 +55,8 @@ def index():
 
 # url_for('static', filename='css/style.css')  # а папка static находится в корне проекта рядом с templates
 
-@app.route('/profile/<string:username>')  # Такая структура означает, если мы будем переходить по адресу /profile/<тут какой угодно пользователь>, то страничка
+@app.route(
+    '/profile/<string:username>')  # Такая структура означает, если мы будем переходить по адресу /profile/<тут какой угодно пользователь>, то страничка
 # вернёт нам сообщение Пользователь <тут какой угодно пользователь>
 def profile(username):
     return f'Пользователь {username}'
@@ -89,4 +91,3 @@ def primer():
 # условие для запуска сервера только на локальном устройстве
 if __name__ == '__main__':
     app.run(debug=True)
-
